@@ -9,12 +9,15 @@ DownloadDir = '/tmp/'
 def get_emoji_list instance
   JSON.parse(
     Net::HTTP.get(
-      URI.parse(instance + EmojiEndpoint)))
+      URI.parse("https://#{instance}#{EmojiEndpoint}")))
 end
 
 def get_emoji emoji
-  File.write("#{DownloadDir}#{emoji['shortcode']}.png",
+  path = "#{DownloadDir}#{emoji['shortcode']}.png"
+  File.write(path,
              Net::HTTP.get(URI.parse(emoji['url'])))
+  path
+end
 
 def check_if_instance instance
   Net::HTTP.get(URI.parse("https://#{instance}#{InstanceEndpoint}")).empty?
