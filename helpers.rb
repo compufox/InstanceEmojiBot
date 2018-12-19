@@ -2,6 +2,8 @@ require 'net/http'
 require 'json'
 
 EmojiEndpoint = '/api/v1/custom_emojis'
+InstanceEndpoint = '/api/v1/instance'
+InstanceSave = 'instances.json'
 DownloadDir = '/tmp/'
 
 def get_emoji_list instance
