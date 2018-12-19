@@ -19,7 +19,6 @@ EmojiBot.on_reply do |bot, status|
                .sub(/https?:\/\//, '')
                .strip
 
-
   unless known_instances.include?(instance)
     known_instances.append(instance)
     save_instance_list known_instances
@@ -36,6 +35,8 @@ EmojiBot.on_reply do |bot, status|
              spoiler: 'emoji',
              hide_media: true
              )
+
+    File.delete(epath)
   end
 end
 
@@ -52,4 +53,6 @@ EmojiBot.run do |bot|
            spoiler: 'emoji',
            hide_media: true
           )
+
+  File.delete(epath)
 end
