@@ -10,7 +10,8 @@ known_instances =  [ 'botsin.space', 'social.computerfox.xyz',
                   ]
 
 # load instances we have saved
-load_instance_list
+loaded = load_instance_list
+known_instances = loaded unless loaded.nil?
 
 # if someone @s us with an instance name
 EmojiBot.on_reply do |bot, status|
@@ -18,13 +19,16 @@ EmojiBot.on_reply do |bot, status|
                .sub(/@#{bot.username} /, '')
                .sub(/https?:\/\//, '')
                .strip
-
-  unless known_instances.include?(instance)
-    known_instances.append(instance)
-    save_instance_list known_instances
+               .match(InstanceRegex)
+  unless instance.nil?
+    instance = instance['inst']
   end
 
-  if check_if_instance(instance)
+  if (not instance.nil?) and check_if_instance(instance)
+    unless known_instances.include?(instance)
+      known_instances.append(instance)
+      save_instance_list known_instances
+    end
     
     emojis = get_emoji_list instance
     chosen_emoji = emojis.sample
@@ -37,6 +41,8 @@ EmojiBot.on_reply do |bot, status|
              )
 
     File.delete(epath)
+  else
+    bot.reply("I don't think that's an instance :/ please check you have the correct domain name and try again!")
   end
 end
 
