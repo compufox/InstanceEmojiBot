@@ -22,7 +22,15 @@ def get_emoji emoji
 end
 
 def check_if_instance instance
-  not Net::HTTP.get(URI.parse("https://#{instance}#{InstanceEndpoint}")).empty?
+  begin
+    not JSON.parse(
+          Net::HTTP.get(
+            URI.parse("https://#{instance}#{InstanceEndpoint}")
+          )
+        )['description'].empty?
+  rescue JSON::ParserError
+    false
+  end
 end
 
 def save_instance_list list
