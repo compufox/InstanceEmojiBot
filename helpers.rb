@@ -6,6 +6,8 @@ InstanceEndpoint = '/api/v1/instance'
 InstanceSave = 'instances.json'
 DownloadDir = '/tmp/'
 
+InstanceRegex = /(?<inst>(\w+\.)+\w+)/i
+
 def get_emoji_list instance
   JSON.parse(
     Net::HTTP.get(
@@ -29,5 +31,5 @@ def save_instance_list list
 end
 
 def load_instance_list
-  known_instances = JSON.parse(File.read(InstanceSave)) if File.exists? InstanceSave
+  JSON.parse(File.read(InstanceSave)) if File.exists? InstanceSave
 end
