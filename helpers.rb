@@ -20,12 +20,12 @@ def get_emoji emoji
 end
 
 def check_if_instance instance
-  Net::HTTP.get(URI.parse("https://#{instance}#{InstanceEndpoint}")).empty?
+  not Net::HTTP.get(URI.parse("https://#{instance}#{InstanceEndpoint}")).empty?
 end
 
-def save_instance_list
+def save_instance_list list
   File.write(InstanceSave,
-             JSON.generate(known_instances))
+             JSON.generate(list))
 end
 
 def load_instance_list
