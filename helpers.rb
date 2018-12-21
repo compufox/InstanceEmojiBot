@@ -6,7 +6,9 @@ InstanceEndpoint = '/api/v1/instance'
 InstanceSave = 'instances.json'
 DownloadDir = '/tmp/'
 
-InstanceRegex = /(?<inst>(\w+\.)+\w+)/i
+# regex here in case the one i've written doesn't work
+# ([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?
+InstanceRegex = /(?<inst>([\w-]+\.)+[\w-]+)/i
 
 def get_emoji_list instance
   JSON.parse(
@@ -28,7 +30,7 @@ def check_if_instance instance
             URI.parse("https://#{instance}#{InstanceEndpoint}")
           )
         )['description'].empty?
-  rescue JSON::ParserError
+  rescue
     false
   end
 end
