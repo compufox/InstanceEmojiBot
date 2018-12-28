@@ -11,7 +11,7 @@ known_instances =  [ 'botsin.space', 'social.computerfox.xyz',
 
 # load instances we have saved
 loaded = load_instance_list
-known_instances = loaded unless loaded.nil?
+known_instances = (loaded + known_instances).uniq unless loaded.nil?
 
 def post_emoji(instance, bot, status = nil)
   emojis = get_emoji_list instance
