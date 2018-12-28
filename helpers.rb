@@ -11,9 +11,17 @@ DownloadDir = '/tmp/'
 InstanceRegex = /(?<inst>([\w-]+\.)+[\w-]+)/i
 
 def get_emoji_list instance
-  JSON.parse(
-    Net::HTTP.get(
-      URI.parse("https://#{instance}#{EmojiEndpoint}")))
+  loaded_emoji = load_emoji_list instance
+
+  if loaded_emoji.nil?
+    loaded_emoji = JSON.parse(
+      Net::HTTP.get(
+        URI.parse("https://#{instance}#{EmojiEndpoint}"))) 
+
+    save_emoji_list instance, loaded_emoji
+  end
+
+  loaded_emoji
 end
 
 def get_emoji emoji
@@ -42,4 +50,18 @@ end
 
 def load_instance_list
   JSON.parse(File.read(InstanceSave)) if File.exists? InstanceSave
+end
+
+def save_emoji_list instance, emojis
+  File.write("#{instance}.emoji",
+             JSON.generate(emojis))
+end
+
+def load_emoji_list instance
+  instFile = "#{instance}.emoji"
+  if File.exists? instFile
+    return JSON.parse(File.read(instFile))
+  else
+    return nil
+  end
 end
