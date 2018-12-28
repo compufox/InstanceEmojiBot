@@ -64,8 +64,8 @@ EmojiBot.on_reply do |bot, status|
       bot.reply("I don't think that instance has any emoji :O")
     end
     
-    else
-      bot.reply("I don't think that's an instance :/ please check you have the correct domain name and try again!")
+  else
+    bot.reply("I don't think that's an instance :/ please check you have the correct domain name and try again!")
   end
 end
 

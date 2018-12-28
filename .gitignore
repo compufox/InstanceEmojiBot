@@ -52,3 +52,4 @@ build-iPhoneSimulator/
 vendor/
 *.json
 *.list
+*.emoji
