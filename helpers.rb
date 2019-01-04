@@ -10,6 +10,12 @@ DownloadDir = '/tmp/'
 # ([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?
 InstanceRegex = /(?<inst>([\w-]+\.)+[\w-]+)/i
 
+
+# this function should check after a while and make sure our
+#  cached emoji list is up-to-date.
+#
+# maybe a timestamp in the json, if it's a certain amount old
+#  we refresh?
 def get_emoji_list instance
   loaded_emoji = load_emoji_list instance
 
